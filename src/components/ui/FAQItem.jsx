@@ -9,14 +9,14 @@ const FAQItem = ({ faq, index, isOpen, onClick, isVisible }) => {
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <button
-        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 rounded-lg group"
+        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 rounded-lg group cursor-pointer "
         onClick={onClick}
       >
-        <span className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+        <span className="font-semibold text-blue-950 group-hover:text-cyan-500 transition-colors duration-300">
           {faq.question}
         </span>
         <ChevronDown
-          className={`h-5 w-5 text-gray-500 transition-all duration-300 group-hover:text-blue-600 ${
+          className={`h-5 w-5 text-gray-500 transition-all duration-300 group-hover:text-cyan-500 ${
             isOpen ? 'rotate-180 text-blue-600' : ''
           }`}
         />

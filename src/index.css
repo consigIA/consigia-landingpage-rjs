@@ -1,1 +1,15 @@
 @import 'tailwindcss';
+
+/* Estilização do scroll global */
+::-webkit-scrollbar {
+    width: 11px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #06b6d4; 
+    border-radius: 1px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: linear-gradient(#f5f5f5, #0f172a);
+  }

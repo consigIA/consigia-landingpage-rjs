@@ -1,114 +1,205 @@
-import { useState, useEffect } from 'react'
-import { MessageCircle, ArrowRight } from 'lucide-react'
-import { testimonials } from '../data/testimonials'
+import { useState, useEffect, useMemo } from 'react'
+import { MessageCircle, ArrowRight, Sparkles, Bot, Zap } from 'lucide-react'
 
 const HeroSection = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [typedText, setTypedText] = useState('')
   const [isTyping, setIsTyping] = useState(true)
+  const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
 
-  const fullText = 'Sua inteligência artificial, que vende e bate metas online.'
+  const words = useMemo(() => [
+    'Atendimento totalmente automatizado e customizado.',
+    'Transforme visitantes em clientes satisfeitos.',
+    'Vendas 24 horas/7 dias por semana.',
+    'Suporte instantâneo para seus clientes.'
+  ], [])
 
-  // Typing animation effect
+  // Enhanced typing animation with word rotation
   useEffect(() => {
-    if (isTyping && typedText.length < fullText.length) {
+    const currentWord = words[currentWordIndex]
+    
+    if (isTyping && typedText.length < currentWord.length) {
+      // Digitando a palavra
       const timeout = setTimeout(() => {
-        setTypedText(fullText.slice(0, typedText.length + 1))
-      }, 100)
+        setTypedText(currentWord.slice(0, typedText.length + 1))
+      }, 80)
       return () => clearTimeout(timeout)
-    } else if (typedText.length === fullText.length) {
-      setIsTyping(false)
+    } else if (isTyping && typedText.length === currentWord.length) {
+      // Palavra completamente digitada, aguarda e depois apaga
+      const timeout = setTimeout(() => {
+        setIsTyping(false)
+      }, 2000) // Aguarda 2 segundos antes de começar a apagar
+      return () => clearTimeout(timeout)
+    } else if (!isTyping && typedText.length > 0) {
+      // Apagando a palavra
+      const timeout = setTimeout(() => {
+        setTypedText(typedText.slice(0, -1))
+      }, 40) // Apaga mais rápido que digita
+      return () => clearTimeout(timeout)
+    } else if (!isTyping && typedText.length === 0) {
+      // Palavra completamente apagada, vai para próxima palavra
+      setCurrentWordIndex((prev) => (prev + 1) % words.length)
+      setIsTyping(true)
     }
-  }, [typedText, isTyping])
+  }, [typedText, isTyping, currentWordIndex, words])
 
-  // Auto-rotate testimonials
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial(prev => (prev + 1) % testimonials.length)
-    }, 4000)
-    return () => clearInterval(interval)
+    setIsVisible(true)
   }, [])
+
+  const features = [
+    
+  ]
 
   return (
     <section
       id="inicio"
-      className="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-20 relative overflow-hidden"
+      className="my-15 py-8 px-8 relative overflow-hidden inset-0 bg-slate-900"
     >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center">
-          <div className="mb-8 animate-fade-in-down">
-            <span className="inline-block bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-6 py-3 rounded-full text-sm font-medium mb-4 transform hover:scale-105 transition-all duration-300 animate-bounce-slow">
-              ⚡ Reduza custos operacionais em até 73%
-            </span>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 animate-fade-in-up">
-            Prazer,{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient">
-              ConsigIA
-            </span>
-          </h1>
-
-          <div className="text-xl text-gray-600 mb-4 max-w-3xl mx-auto h-8 animate-fade-in-up animation-delay-300">
-            {typedText}
-            <span className="animate-pulse">|</span>
-          </div>
-
-          <p className="text-lg text-gray-500 mb-8 animate-fade-in-up animation-delay-500">
-            Feita para{' '}
-            <span className="text-red-500 font-semibold animate-pulse">
-              CORRESPONDENTES BANCÁRIOS ❤
-            </span>
-          </p>
-
-          <p className="text-lg text-gray-700 mb-12 max-w-4xl mx-auto animate-fade-in-up animation-delay-700">
-            A ConsigIA oferece tudo para seu negócio vender mais e manter seus
-            clientes 100% satisfeitos
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-1000">
-            <button className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center relative overflow-hidden">
-              <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <MessageCircle className="mr-2 h-5 w-5 relative z-10 group-hover:animate-bounce" />
-              <span className="relative z-10">Ver IA em Ação</span>
-            </button>
-            <button className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 hover:shadow-lg transform hover:scale-105 transition-all duration-300 group">
-              <span className="group-hover:translate-x-1 transition-transform duration-300 inline-block">
-                Saiba Mais
+      {/* Container do conteúdo principal */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-slate-900 relative z-10 flex flex-col lg:flex-row items-center py-0">
+        {/* Coluna da esquerda (texto) */}
+        <div className="w-full lg:w-1/2 px-4 py-10 sm:px-6 lg:px-16">
+          <div className="text-left space-y-6">
+            {/* Badge melhorado */}
+            <div 
+              className={`inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-full px-4 py-2 transition-all duration-1000 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+            >
+              <Sparkles className="h-4 w-4 text-cyan-400" />
+              <span className="text-cyan-400/80 font-semibold text-sm tracking-wider uppercase">
+                Melhore seus atendimentos em 100%
               </span>
-              <ArrowRight className="inline-block ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </button>
-          </div>
+            </div>
 
-          {/* Floating Testimonials */}
-          <div className="mt-16 animate-fade-in-up animation-delay-1200">
-            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 max-w-md mx-auto shadow-lg transform hover:scale-105 transition-all duration-300">
-              <div className="text-2xl mb-2 animate-slide-up">
-                {testimonials[currentTestimonial]}
-              </div>
-              <div className="flex justify-center space-x-2 mt-4">
-                {testimonials.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentTestimonial
-                        ? 'bg-blue-600 w-6'
-                        : 'bg-gray-300'
-                    }`}
-                  />
-                ))}
-              </div>
+            <h1 
+              className={`text-5xl md:text-7xl font-bold text-white mb-6 leading-tight transition-all duration-1000 animation-delay-200 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+            >
+              Prazer,{' '}
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                ConsigIA
+              </span>
+            </h1>
+
+            {/* Typing Animation melhorada */}
+            <div 
+              className={`h-16 flex items-center transition-all duration-1000 animation-delay-400 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+            >
+              <p className="text-xl md:text-2xl text-white font-medium">
+                {typedText}
+                <span className="animate-pulse">|</span>
+              </p>
+            </div>
+
+            <p 
+              className={`text-lg md:text-xl text-gray-300 leading-relaxed max-w-lg transition-all duration-1000 animation-delay-600 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+            >
+              A ConsigIA oferece tudo para seu negócio vender mais e manter seus
+              clientes mais que satisfeitos com tecnologia de ponta
+            </p>
+
+            {/* Feature Pills */}
+            <div 
+              className={`flex flex-wrap gap-3 transition-all duration-1000 animation-delay-800 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+            >
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-full px-4 py-2 hover:bg-slate-800/80 hover:border-cyan-400/50 transition-all duration-300"
+                >
+                  <feature.icon className={`h-4 w-4 ${feature.color}`} />
+                  <span className="text-white text-sm font-medium">{feature.text}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Botões menores */}
+            <div 
+              className={`flex flex-col sm:flex-row gap-3 transition-all duration-1000 animation-delay-1000 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+            >
+              <button 
+                onClick={() =>
+                  window.open(
+                    'https://wa.me/554999957692?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20ConsigIA',
+                    '_blank'
+                  )
+                }
+                className="group bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-8 py-4 rounded-2xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center relative overflow-hidden cursor-pointer"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <MessageCircle className="mr-2 h-5 w-5 relative z-10 group-hover:animate-pulse" />
+                <span className="relative z-10">Contrate agora!</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Coluna da direita (imagem) */}
+        <div className="w-full lg:w-1/2 py-10 sm:px-6 lg:px-10 flex justify-center items-center">
+          <div 
+            className={`relative group transition-all duration-1000 animation-delay-1200 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            {/* Main image container */}
+            <div className="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-3xl p-4 hover:border-cyan-400/50 hover:bg-slate-800/80 transition-all duration-300">
+              <img 
+                src="/foto1.png" 
+                className="w-full max-w-md rounded-2xl transform group-hover:scale-105 transition-transform duration-500 shadow-2xl" 
+                alt="ConsigIA Interface" 
+              />
             </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animation-delay-200 {
+          animation-delay: 200ms;
+        }
+
+        .animation-delay-400 {
+          animation-delay: 400ms;
+        }
+
+        .animation-delay-600 {
+          animation-delay: 600ms;
+        }
+
+        .animation-delay-800 {
+          animation-delay: 800ms;
+        }
+
+        .animation-delay-1000 {
+          animation-delay: 1000ms;
+        }
+
+        .animation-delay-1200 {
+          animation-delay: 1200ms;
+        }
+      `}</style>
     </section>
   )
 }

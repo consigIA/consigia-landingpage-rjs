@@ -1,9 +1,9 @@
 const StatCard = ({ stat, index }) => {
-  const Icon = stat.icon
+const Icon = stat.icon
 
   return (
     <div
-      className={`bg-white/10 backdrop-blur-md rounded-xl p-6 transform hover:scale-110 transition-all duration-500 hover:bg-white/20 animate-fade-in-up`}
+      className={`bg-white/10 backdrop-blur-md rounded-xl p-6 transform hover:scale-95 transition-all duration-500 hover:bg-white/20 animate-fade-in-up`}
       style={{ animationDelay: `${index * 200}ms` }}
     >
       <Icon className="h-8 w-8 text-white mx-auto mb-4 animate-bounce-slow" />

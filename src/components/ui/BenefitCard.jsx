@@ -1,5 +1,5 @@
 const BenefitCard = ({ benefit, index, isVisible }) => {
-  const Icon = benefit.icon
+const Icon = benefit.icon
 
   return (
     <div
@@ -9,14 +9,14 @@ const BenefitCard = ({ benefit, index, isVisible }) => {
       style={{ animationDelay: `${index * 200}ms` }}
     >
       <div
-        className={`w-16 h-16 bg-gradient-to-r ${benefit.color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:animate-bounce`}
+        className={`w-16 h-16 bg-gradient-to-r from-cyan-400 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:animate-bounce`}
       >
         <Icon className="h-8 w-8 text-white" />
       </div>
-      <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+      <h3 className="text-xl font-semibold text-white mb-3">
         {benefit.title}
       </h3>
-      <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+      <p className="text-cyan-400">
         {benefit.description}
       </p>
     </div>

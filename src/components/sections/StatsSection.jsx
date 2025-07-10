@@ -1,6 +1,53 @@
 import { useState, useEffect } from 'react'
 import { TrendingUp, Clock, Star, Zap } from 'lucide-react'
-import StatCard from '../ui/StatCard'
+
+const StatCard = ({ stat, index, isVisible }) => {
+  const [isHovered, setIsHovered] = useState(false)
+  
+  return (
+    <div
+      className="relative group cursor-pointer transition-all duration-500 ease-out"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        animationDelay: `${index * 150}ms`,
+        perspective: '1000px'
+      }}
+    >
+      {/* Main card */}
+      <div
+        className={`bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 hover:border-cyan-400/50 hover:bg-slate-800/80 transition-all duration-300 hover:transform hover:scale-105 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+        style={{
+          transform: isHovered ? 'rotateX(1deg) rotateY(1deg)' : 'rotateX(0deg) rotateY(0deg)',
+          transformStyle: 'preserve-3d'
+        }}
+      >
+        {/* Icon container */}
+        <div className={`relative mb-4 transition-all duration-500 ${
+          isHovered ? 'scale-105 rotate-3' : 'scale-100 rotate-0'
+        }`}>
+          <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 rounded-xl">
+            <stat.icon className="w-6 h-6 text-cyan-400" />
+          </div>
+        </div>
+        
+        {/* Number */}
+        <div className="text-4xl font-bold mb-2 text-white">
+          <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            {stat.number}
+          </span>
+        </div>
+        
+        {/* Label */}
+        <div className="text-gray-300 font-medium leading-relaxed">
+          {stat.label}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const StatsSection = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -24,26 +71,51 @@ const StatsSection = () => {
   }, [])
 
   const stats = [
-    { number: '73%', label: 'Redução de Custos', icon: TrendingUp },
-    { number: '24/7', label: 'Disponibilidade', icon: Clock },
-    { number: '300%', label: 'Aumento em Vendas', icon: Star },
-    { number: '30min', label: 'Tempo de Setup', icon: Zap }
+    { number: '100%', label: 'Redução de Custos', icon: TrendingUp },
+    { number: '24h', label: 'Disponibilidade', icon: Clock },
+    { number: '200%', label: 'Aumento em Vendas', icon: Star },
+    { number: '48h', label: 'Implantação', icon: Zap }
   ]
 
   return (
-    <section
-      className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-size-200 animate-gradient-x"
-      id="stats"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="stats" className="py-15 relative overflow-hidden">
+      {/* Background matching BenefitsSection */}
+      <div className="absolute inset-0 bg-slate-900"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-slate-900 relative z-10">
         <div
-          className={`grid grid-cols-2 md:grid-cols-4 gap-8 text-center transition-all duration-1000 ${
+          className={`text-center mb-16 transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
+          <div className="inline-block mb-4">
+            <span className="text-cyan-400/80 text-lg font-semibold tracking-wider uppercase">
+              Resultados
+            </span>
+          </div>
+          
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
+            Resultados{' '}
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Impressionantes
+            </span>
+          </h2>
+          
+          <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full"></div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid px-14 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
-            <StatCard key={index} stat={stat} index={index} />
+            <StatCard key={index} stat={stat} index={index} isVisible={isVisible} />
           ))}
+        </div>
+
+        <div
+          className={`mt-16 text-center transition-all duration-1000 animation-delay-800 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
         </div>
       </div>
     </section>
