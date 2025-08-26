@@ -9,42 +9,42 @@ const TestimonialsSection = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'Maria Silva',
-      position: 'Gerente de Atendimento',
-      company: 'TechCorp',
-      rating: 5,
-      text: 'A ConsigIA revolucionou nosso atendimento. Reduzimos o tempo de resposta em 80% e nossos clientes estão muito mais satisfeitos.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1494790108755-2616b332446c?w=300&h=200&fit=crop&crop=face',
-      hasVideo: true
+      name: 'Renata Mendes',
+      position: 'Coordenadora de Operações',
+      company: 'Facta Financeira',
+      rating: 4,
+      text: 'No começo estava receosa com a ideia de automatizar o atendimento, mas depois de 2 meses usando o ConsigIA, percebi que nossa equipe consegue focar em casos mais complexos enquanto o sistema cuida das dúvidas básicas. Ainda tem alguns ajustes para fazer, mas já facilita muito nosso dia a dia.',
+      videoThumbnail: '/testimonials/renata.jpg',
+      hasVideo: false
     },
     {
       id: 2,
-      name: 'João Santos',
-      position: 'CEO',
-      company: 'Inovação Digital',
+      name: 'Ricardo Almeida',
+      position: 'Supervisor de Vendas',
+      company: 'C6 Bank',
       rating: 5,
-      text: 'Implementação rápida e resultados imediatos. O bot desenvolvido pela ConsigIA superou todas nossas expectativas.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=200&fit=crop&crop=face',
+      text: 'O que mais me impressionou foi a redução nas desistências. Antes perdíamos muitos leads porque demorávamos para responder, agora o primeiro contato é instantâneo. Tivemos que fazer alguns ajustes na linguagem do bot no início, mas a equipe da ConsigIA foi super prestativa.',
+      videoThumbnail: '/testimonials/ricardo.jpg',
       hasVideo: true
     },
     {
       id: 3,
-      name: 'Ana Costa',
-      position: 'Diretora Comercial',
-      company: 'VendaMais',
-      rating: 5,
-      text: 'Aumentamos nossas vendas em 35% após implementar o sistema de automação. Investimento que se paga rapidamente.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face',
-      hasVideo: true
+      name: 'Patricia Santos',
+      position: 'Analista de CX',
+      company: 'Pan Consignados',
+      rating: 4,
+      text: 'Trabalho com atendimento há 8 anos e confesso que estava cética sobre usar IA, mas me surpreendi. O sistema é intuitivo e nos ajuda principalmente nos horários de pico. Claro, ainda precisamos intervir em alguns casos, mas a triagem automática economiza muito tempo.',
+      videoThumbnail: '/testimonials/patricia.jpg',
+      hasVideo: false
     },
     {
       id: 4,
-      name: 'Carlos Oliveira',
-      position: 'Diretor de Marketing',
-      company: 'Digital Plus',
+      name: 'Marcos Oliveira',
+      position: 'Gerente Comercial',
+      company: 'BMG',
       rating: 5,
-      text: 'A qualidade do atendimento automatizado é impressionante. Nossos clientes nem percebem que estão falando com IA.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop&crop=face',
+      text: 'A gente tinha um problema sério com o tempo de resposta nos fins de semana. Desde que implementamos o ConsigIA, conseguimos manter um padrão de atendimento 24/7. O mais legal é que dá pra personalizar as respostas e o tom de conversa conforme nosso perfil.',
+      videoThumbnail: '/testimonials/marcos.jpg',
       hasVideo: true
     }
   ]
@@ -107,15 +107,13 @@ const TestimonialsSection = () => {
             }`}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-blue-950 mb-6">
-            O que Nossos{' '}
+            Experiências{' '}
             <span className="bg-blue-950 bg-clip-text text-transparent">
-              Clientes
-            </span>{' '}
-            Dizem
+              Reais
+            </span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Histórias reais de empresas que transformaram seu atendimento com nossas soluções
-            de automação inteligente.
+            Veja como nossos parceiros estão usando a ConsigIA para melhorar seus processos de atendimento.
           </p>
         </div>
 
@@ -126,7 +124,7 @@ const TestimonialsSection = () => {
         >
           <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-4xl mx-auto relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-slate-900 to-blue-950"></div>
-            
+
             <div className="flex flex-col md:flex-row items-center gap-8">
               {/* Video Section */}
               <div className="relative group flex-shrink-0">
@@ -137,7 +135,7 @@ const TestimonialsSection = () => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-950/50 to-transparent"></div>
-                  
+
                   {/* Play Button */}
                   <button
                     onClick={() => handleVideoToggle(testimonials[currentTestimonial].id)}
@@ -166,7 +164,7 @@ const TestimonialsSection = () => {
                 </div>
 
                 <Quote className="w-8 h-8 text-blue-950/20 mb-4 mx-auto md:mx-0" />
-                
+
                 <blockquote className="text-lg md:text-xl text-slate-700 mb-6 font-medium leading-relaxed">
                   "{testimonials[currentTestimonial].text}"
                 </blockquote>
@@ -208,7 +206,7 @@ const TestimonialsSection = () => {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="flex-1">
                   <h4 className="font-bold text-blue-950 group-hover:text-slate-900 transition-colors">
                     {testimonial.name}
@@ -235,11 +233,10 @@ const TestimonialsSection = () => {
             <button
               key={index}
               onClick={() => setCurrentTestimonial(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentTestimonial
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial
                   ? 'bg-gradient-to-r from-slate-900 to-blue-950 w-8'
                   : 'bg-slate-300 hover:bg-slate-400'
-              }`}
+                }`}
             />
           ))}
         </div>

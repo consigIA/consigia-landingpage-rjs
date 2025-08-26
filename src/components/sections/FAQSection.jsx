@@ -38,34 +38,32 @@ const faqs = [
 const FAQItem = ({ faq, isOpen, onToggle, isVisible, index }) => {
   return (
     <div
-      className={`transform transition-all duration-700 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}
+      className={`transform transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 overflow-hidden">
+      <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 overflow-hidden">
         <button
           onClick={onToggle}
-          className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-slate-50 transition-colors duration-200 cursor-pointer"
+          className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between hover:bg-slate-50 transition-colors duration-200 cursor-pointer"
         >
-          <span className="font-semibold text-blue-950 text-lg pr-4">
+          <span className="font-semibold text-blue-950 text-sm sm:text-base lg:text-lg pr-3 sm:pr-4">
             {faq.question}
           </span>
           <div className="flex-shrink-0">
             {isOpen ? (
-              <ChevronUp className="h-5 w-5 text-cyan-500 transform transition-transform duration-200" />
+              <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-500 transform transition-transform duration-200" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-slate-400 transform transition-transform duration-200" />
+              <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-slate-400 transform transition-transform duration-200" />
             )}
           </div>
         </button>
-        
-        <div className={`transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        } overflow-hidden`}>
-          <div className="px-6 pb-5">
+
+        <div className={`transition-all duration-500 ease-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          } overflow-hidden`}>
+          <div className="px-4 sm:px-6 pb-4 sm:pb-5">
             <div className="pt-2 border-t border-slate-100">
-              <p className="text-slate-600 leading-relaxed mt-3">
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed mt-2 sm:mt-3">
                 {faq.answer}
               </p>
             </div>
@@ -102,25 +100,24 @@ const FAQSection = () => {
   }, [hasAnimated])
 
   return (
-    
-    <section id="duvidas" className="py-20 px-14 bg-gradient-to-br from-slate-50 to-cyan-50 relative" ref={sectionRef}>
+
+    <section id="duvidas" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-14 bg-gradient-to-br from-slate-50 to-cyan-50 relative" ref={sectionRef}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className={`text-center mb-16 transition-all duration-1000 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
         >
           <div className="flex items-center justify-center mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-slate-900 to-blue-950 rounded-full flex items-center justify-center ">
-              <HelpCircle className="h-6 w-6 text-white" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-slate-900 to-blue-950 rounded-full flex items-center justify-center">
+              <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
           </div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-950 mb-4">
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-950 mb-3 sm:mb-4">
             Dúvidas Frequentes
           </h2>
-          
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+
+          <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-2xl mx-auto px-4">
             Ficou com alguma dúvida? Confira nossa seção de{' '}
             <span className="text-cyan-600 font-semibold">dúvidas frequentes</span>
             {' '}ou entre em contato com nossa equipe
@@ -128,7 +125,7 @@ const FAQSection = () => {
         </div>
 
         {/* FAQ Items */}
-        <div className="space-y-4 max-w-3xl mx-auto">
+        <div className="space-y-3 sm:space-y-4 max-w-3xl mx-auto">
           {faqs.map((faq, index) => (
             <FAQItem
               key={faq.id}

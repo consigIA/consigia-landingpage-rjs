@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-const ComparisonSlider = ({ 
-  contentBefore, 
-  contentAfter, 
-  altBefore = "Antes", 
+const ComparisonSlider = ({
+  contentBefore,
+  contentAfter,
+  altBefore = "Antes",
   altAfter = "Depois",
-  initialPosition = 50 
+  initialPosition = 50
 }) => {
   const [position, setPosition] = useState(initialPosition)
   const [isDragging, setIsDragging] = useState(false)
@@ -71,8 +71,8 @@ const ComparisonSlider = ({
       style={{ aspectRatio: '16/9' }}
     >
       {/* Content After (Background) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-100 backdrop-blur-sm p-2 sm:p-4 md:p-6 flex flex-col justify-center items-center text-center">
-        <div className="bg-white/70 backdrop-blur-md rounded-xl p-2 sm:p-4 md:p-6 shadow-lg border border-white/20 max-w-full max-h-full overflow-auto">
+      <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-100 backdrop-blur-sm p-2 sm:p-4 flex flex-col justify-center items-center text-center">
+        <div className="bg-white/70 backdrop-blur-md rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg border border-white/20 max-w-full max-h-full overflow-auto">
           {contentAfter}
         </div>
       </div>
@@ -82,8 +82,8 @@ const ComparisonSlider = ({
         className="absolute inset-0 overflow-hidden"
         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
       >
-        <div className="w-full h-full bg-gradient-to-br from-red-50 to-rose-100 backdrop-blur-sm p-2 sm:p-4 md:p-6 flex flex-col justify-center items-center text-center">
-          <div className="bg-white/70 backdrop-blur-md rounded-xl p-2 sm:p-4 md:p-6 shadow-lg border border-white/20 max-w-full max-h-full overflow-auto">
+        <div className="w-full h-full bg-gradient-to-br from-red-50 to-rose-100 backdrop-blur-sm p-2 sm:p-4 flex flex-col justify-center items-center text-center">
+          <div className="bg-white/70 backdrop-blur-md rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg border border-white/20 max-w-full max-h-full overflow-auto">
             {contentBefore}
           </div>
         </div>
@@ -97,21 +97,21 @@ const ComparisonSlider = ({
         onTouchStart={handleTouchStart}
       >
         {/* Handle Button */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center cursor-grab active:cursor-grabbing hover:scale-110 transition-all duration-200 border-2 border-cyan-400">
-          <ChevronLeft className="w-4 h-4 text-blue-950 absolute left-1.5" />
-          <ChevronRight className="w-4 h-4 text-blue-950 absolute right-1.5" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-white rounded-full shadow-lg flex items-center justify-center cursor-grab active:cursor-grabbing hover:scale-110 transition-all duration-200 border-2 border-cyan-400">
+          <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4 text-blue-950 absolute left-1 sm:left-1.5" />
+          <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-blue-950 absolute right-1 sm:right-1.5" />
         </div>
       </div>
 
       {/* Labels */}
-      <div 
-        className="absolute top-4 left-4 bg-gradient-to-r from-slate-900 to-blue-950 text-white px-4 py-2 rounded-full text-sm font-medium transition-opacity duration-200"
+      <div
+        className="absolute top-2 sm:top-4 left-2 sm:left-4 bg-gradient-to-r from-slate-900 to-blue-950 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-opacity duration-200"
         style={{ opacity: position > 10 ? 1 : 0 }}
       >
         {altBefore}
       </div>
-      <div 
-        className="absolute top-4 right-4 bg-gradient-to-r from-slate-900 to-blue-950 text-white px-4 py-2 rounded-full text-sm font-medium transition-opacity duration-200"
+      <div
+        className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-gradient-to-r from-slate-900 to-blue-950 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-opacity duration-200"
         style={{ opacity: position < 90 ? 1 : 0 }}
       >
         {altAfter}
@@ -144,10 +144,10 @@ export default function Comparation() {
 
   const beforeContent = (
     <div className="w-full">
-      <h3 className="text-lg sm:text-xl font-bold text-blue-950 mb-2 sm:mb-4 flex items-center gap-2">
-        <span className="text-xl sm:text-2xl">❌</span> Antes
+      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-blue-950 mb-2 sm:mb-3 lg:mb-4 flex items-center gap-1.5 sm:gap-2">
+        <span className="text-lg sm:text-xl lg:text-2xl">❌</span> Antes
       </h3>
-      <ul className="space-y-2 sm:space-y-3 text-slate-700 text-sm sm:text-base">
+      <ul className="space-y-1.5 sm:space-y-2 lg:space-y-3 text-slate-700 text-xs sm:text-sm lg:text-base">
         <li className="flex items-start gap-2">
           <span className="text-red-500 mt-1 font-bold text-xs sm:text-sm">×</span>
           <span><strong>Atendimento lento:</strong> Clientes aguardam horas para resposta</span>
@@ -170,10 +170,10 @@ export default function Comparation() {
 
   const afterContent = (
     <div className="w-full">
-      <h3 className="text-lg sm:text-xl font-bold text-blue-950 mb-2 sm:mb-4 flex items-center gap-2">
-        <span className="text-xl sm:text-2xl">✅</span> Depois
+      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-blue-950 mb-2 sm:mb-3 lg:mb-4 flex items-center gap-1.5 sm:gap-2">
+        <span className="text-lg sm:text-xl lg:text-2xl">✅</span> Depois
       </h3>
-      <ul className="space-y-2 sm:space-y-3 text-slate-700 text-sm sm:text-base">
+      <ul className="space-y-1.5 sm:space-y-2 lg:space-y-3 text-slate-700 text-xs sm:text-sm lg:text-base">
         <li className="flex items-start gap-2">
           <span className="text-green-500 mt-1 font-bold text-xs sm:text-sm">✓</span>
           <span><strong>Resposta instantânea:</strong> Atendimento imediato 24/7</span>
@@ -195,31 +195,26 @@ export default function Comparation() {
   )
 
   return (
-    <section className="py-15 bg-gradient-to-br from-slate-50 to-cyan-50 relative" ref={sectionRef}>
+    <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-slate-50 to-cyan-50 relative" ref={sectionRef}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className={`text-center mb-11 transition-all duration-1000 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          className={`text-center mb-11 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
         >
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Veja a transformação que nossa solução
-            <p>
-              proporcionou aos nossos clientes!
-            </p>
+          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto px-4">
+            Veja a transformação que nossa solução proporcionou aos nossos clientes!
           </p>
         </div>
 
         <div
-          className={`transform transition-all duration-1000 max-w-2xl mx-auto ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          className={`transform transition-all duration-1000 max-w-2xl mx-auto ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
         >
           <ComparisonSlider
             contentBefore={beforeContent}
             contentAfter={afterContent}
             altBefore="Sem I.A"
-            altAfter="Com I.A" 
+            altAfter="Com I.A"
             initialPosition={50}
           />
         </div>

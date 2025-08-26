@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { MessageCircle, X } from 'lucide-react';
+import { X } from 'lucide-react';
+import { SiWhatsapp } from "react-icons/si";
 
 
 const ConsigAIButton = () => {
@@ -15,15 +16,15 @@ const ConsigAIButton = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50">
 
-        {/* Conteúdo */}
-        <div className="space-y-3">
-          <button
-            onClick={handleWhatsAppClick}
-            className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-4 rounded-full font-medium text-sm transition-all duration-500 ease-in-out hover:scale-105 flex items-center justify-center gap-2 cursor-pointer animate-[soft-float_1s_ease-in-out_infinite] hover:animate-none"
-          >
-            <MessageCircle size={30} />
-          </button>
-        </div>
+      {/* Conteúdo */}
+      <div className="space-y-3">
+        <button
+          onClick={handleWhatsAppClick}
+          className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-4 rounded-full font-medium text-sm transition-all duration-500 ease-in-out hover:scale-105 flex items-center justify-center gap-2 cursor-pointer animate-[soft-float_1s_ease-in-out_infinite] hover:animate-none"
+        >
+          <SiWhatsapp size={30} />
+        </button>
+      </div>
     </div>
   );
 };

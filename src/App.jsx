@@ -15,6 +15,7 @@ import ConsigAIButton from './components/common/ConsigIA'
 import FeedbackSection from './components/sections/FeedbackSection'
 import React from 'react';
 import './styles/animations.css'
+import NotFound from './components/pages/NotFound';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
                 <CTASection />
               </main>
               <Footer />
+              <ConsigAIButton />
             </>
           }
         />
@@ -48,6 +50,7 @@ function App() {
               <Header />
               <FormularySection />
               <Footer />
+              <ConsigAIButton />
             </>
           }
         />
@@ -59,12 +62,17 @@ function App() {
               <Header />
               <NewsSection />
               <Footer />
+              <ConsigAIButton />
             </>
           }
         />
+
+        {/* 404 Page */}
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
       </Routes>
-          
-      <ConsigAIButton />
     </div>
   )
 }

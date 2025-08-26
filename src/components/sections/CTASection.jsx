@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { MessageCircle, ArrowRight, Shield, Users, Zap } from 'lucide-react'
+import { ArrowRight, Shield, Users, Zap } from 'lucide-react'
+import { SiWhatsapp } from "react-icons/si"
 
 const CTASection = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -30,7 +31,7 @@ const CTASection = () => {
 
   return (
     <section
-      className="py-20 px-14 bg-gradient-to-br from-slate-50 to-cyan-50 relative"
+      className="py-16 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-14 bg-gradient-to-br from-slate-50 to-cyan-50 relative"
       id="cta"
     >
 
@@ -40,14 +41,14 @@ const CTASection = () => {
           className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-950 mb-6 animate-fade-in-up">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-950 mb-4 sm:mb-6 animate-fade-in-up px-4">
             Pronto para{' '}
             <span className="bg-gradient-to-r from-slate-900 to-blue-950 bg-clip-text text-transparent">
               revolucionar
             </span>{' '}
             suas vendas?
           </h2>
-          <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-300">
+          <p className="text-lg sm:text-xl text-slate-600 mb-6 sm:mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-300 px-4">
             Junte-se aos nossos parceiros que já estão faturando
             com nossa I.A
           </p>
@@ -60,10 +61,10 @@ const CTASection = () => {
                   '_blank'
                 )
               }
-              className="group bg-gradient-to-r from-slate-900 to-blue-950 hover:from-blue-950 hover:to-slate-900 text-white px-8 py-4 rounded-2xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center relative overflow-hidden"
+              className="group bg-gradient-to-r from-slate-900 to-blue-950 hover:from-blue-950 hover:to-slate-900 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-semibold shadow-xl sm:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center relative overflow-hidden w-full sm:w-auto"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-blue-950 to-slate-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <MessageCircle className="mr-2 h-5 w-5 relative z-10 group-hover:animate-pulse" />
+              <SiWhatsapp className="mr-2 h-5 w-5 relative z-10 group-hover:animate-pulse" />
               <span className="relative z-10 cursor-pointer">Contrate Agora!</span>
             </button>
 
@@ -73,7 +74,7 @@ const CTASection = () => {
                   'https://calendly.com/atendimento-consigia/30min'
                 )
               }
-            className="group bg-white border-2 border-slate-200 hover:border-blue-950 text-blue-950 px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-slate-50 transform hover:scale-105 transition-all duration-300 relative overflow-hidden shadow-lg">
+              className="group bg-white border-2 border-slate-200 hover:border-blue-950 text-blue-950 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-semibold hover:bg-slate-50 transform hover:scale-105 transition-all duration-300 relative overflow-hidden shadow-lg w-full sm:w-auto">
               <span className="group-hover:translate-x-1 transition-transform duration-300 inline-block cursor-pointer">
                 Agendar Reunião
               </span>
@@ -82,14 +83,14 @@ const CTASection = () => {
           </div>
 
           {/* Trust indicators */}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-700">
-            <div className="grid grid-cols-3 gap-8">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl p-6 sm:p-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-700">
+            <div className="grid grid-cols-3 gap-4 sm:gap-8">
               {trustIndicators.map((indicator, index) => (
                 <div key={index} className="text-center group">
-                  <div className="bg-gradient-to-br from-slate-50 to-cyan-50 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <indicator.icon className="h-8 w-8 text-blue-950" />
+                  <div className="bg-gradient-to-br from-slate-50 to-cyan-50 rounded-full w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <indicator.icon className="h-6 w-6 sm:h-8 sm:w-8 text-blue-950" />
                   </div>
-                  <p className="text-slate-600 text-sm font-medium">{indicator.label}</p>
+                  <p className="text-slate-600 text-xs sm:text-sm font-medium">{indicator.label}</p>
                 </div>
               ))}
             </div>
