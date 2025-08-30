@@ -1,169 +1,272 @@
-import { useState, useEffect, useMemo } from 'react'
-import { ArrowRight, Sparkles, Bot, Zap } from 'lucide-react'
-import { SiWhatsapp } from "react-icons/si"
+import { useState, useEffect } from 'react'
+import { ArrowRight, Sparkles, MessageCircle } from 'lucide-react'
 
 const HeroSection = () => {
   const [typedText, setTypedText] = useState('')
   const [isTyping, setIsTyping] = useState(true)
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
 
-  const words = useMemo(() => [
+  const words = [
     'Atendimento totalmente automatizado e customizado.',
     'Transforme visitantes em clientes satisfeitos.',
     'Vendas 24 horas/7 dias por semana.',
     'Suporte instantâneo para seus clientes.'
-  ], [])
+  ]
 
-  // Enhanced typing animation with word rotation
   useEffect(() => {
     const currentWord = words[currentWordIndex]
 
     if (isTyping && typedText.length < currentWord.length) {
-      // Digitando a palavra
       const timeout = setTimeout(() => {
         setTypedText(currentWord.slice(0, typedText.length + 1))
       }, 80)
       return () => clearTimeout(timeout)
     } else if (isTyping && typedText.length === currentWord.length) {
-      // Palavra completamente digitada, aguarda e depois apaga
-      const timeout = setTimeout(() => {
-        setIsTyping(false)
-      }, 2000) // Aguarda 2 segundos antes de começar a apagar
-      return () => clearTimeout(timeout)
+      setTimeout(() => setIsTyping(false), 2500)
     } else if (!isTyping && typedText.length > 0) {
-      // Apagando a palavra
       const timeout = setTimeout(() => {
         setTypedText(typedText.slice(0, -1))
-      }, 40) // Apaga mais rápido que digita
+      }, 40)
       return () => clearTimeout(timeout)
     } else if (!isTyping && typedText.length === 0) {
-      // Palavra completamente apagada, vai para próxima palavra
       setCurrentWordIndex((prev) => (prev + 1) % words.length)
       setIsTyping(true)
     }
-  }, [typedText, isTyping, currentWordIndex, words])
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  const features = [
-
-  ]
+  }, [typedText, isTyping, currentWordIndex])
 
   return (
-    <section
-      id="inicio"
-      className="pt-20 sm:pt-24 lg:pt-32 pb-16 sm:pb-20 lg:pb-32 relative overflow-hidden inset-0 bg-slate-900"
-    >
-      {/* Container do conteúdo principal */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-slate-900 relative z-10 flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12">
-        {/* Coluna da esquerda (texto) */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center">
-          <div className="text-left space-y-4 sm:space-y-6">
-            {/* Badge melhorado */}
-            <div
-              className={`inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-full px-4 py-2 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-            >
-              <Sparkles className="h-4 w-4 text-cyan-400" />
-              <span className="text-cyan-400/80 font-semibold text-sm tracking-wider uppercase">
-                Melhore seus atendimentos em 100%
-              </span>
-            </div>
+    <section id="inicio" className="hero-section">
+      
+      {/* Background decorations */}
+      <div className="hero-bg-decoration" />
+      <div className="hero-bg-pattern" />
+      
+      <div className="hero-container">
+        
+        {/* Left column - Text */}
+        <div className="hero-content">
+          
+          {/* Badge */}
+          <div className="hero-badge">
+            <Sparkles className="hero-badge-icon" />
+            <span className="hero-badge-text">
+              #1 EM AUTOMAÇÃO COMERCIAL
+            </span>
+          </div>
 
-            <h1
-              className={`text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-[1.1] transition-all duration-1000 animation-delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-            >
-              Prazer,{' '}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                ConsigIA
-              </span>
-            </h1>
+          {/* Title */}
+          <h1 className="hero-title">
+            Conheça a{' '}
+            <span className="hero-title-highlight">
+              ConsigIA
+            </span>
+          </h1>
 
-            {/* Typing Animation melhorada */}
-            <div
-              className={`h-12 sm:h-16 flex items-center transition-all duration-1000 animation-delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-            >
-              <p className="text-xl md:text-2xl text-white font-medium">
-                {typedText}
-                <span className="animate-pulse">|</span>
-              </p>
-            </div>
-
-            <p
-              className={`text-lg md:text-xl text-gray-300 leading-relaxed max-w-lg transition-all duration-1000 animation-delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-            >
-              A ConsigIA oferece tudo para seu negócio vender mais e manter seus
-              clientes mais que satisfeitos com tecnologia de ponta
+          {/* Typing animation */}
+          <div className="hero-subtitle-container">
+            <p className="hero-subtitle">
+              {typedText}
+              <span className="hero-cursor">|</span>
             </p>
-
-            {/* Feature Pills */}
-            <div
-              className={`flex flex-wrap gap-3 transition-all duration-1000 animation-delay-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-            >
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-full px-4 py-2 hover:bg-slate-800/80 hover:border-cyan-400/50 transition-all duration-300"
-                >
-                  <feature.icon className={`h-4 w-4 ${feature.color}`} />
-                  <span className="text-white text-sm font-medium">{feature.text}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Botões menores */}
-            <div
-              className={`flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-1000 animation-delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-            >
-              <button
-                onClick={() =>
-                  window.open(
-                    'https://wa.me/554999957692?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20ConsigIA',
-                    '_blank'
-                  )
-                }
-                className="group bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-8 py-4 rounded-2xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center relative overflow-hidden cursor-pointer"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <SiWhatsapp className="mr-2 h-5 w-5 relative z-10 group-hover:animate-pulse" />
-                <span className="relative z-10">Contrate agora!</span>
-              </button>
-            </div>
           </div>
-        </div>
 
-        {/* Coluna da direita (imagem) */}
-        <div className="w-full lg:w-1/2 flex justify-center items-center px-4 sm:px-6 lg:px-8">
-          <div
-            className={`relative group transition-all duration-1000 animation-delay-1200 w-full max-w-lg lg:max-w-none ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
+          {/* Description */}
+          <p className="hero-description">
+            Revolucione seu atendimento com inteligência artificial. 
+            Automatize processos e ofereça experiências excepcionais 24 horas por dia.
+          </p>
+
+          {/* CTA Button */}
+          <button
+            onClick={() => window.open('https://wa.me/554999957692?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20ConsigIA', '_blank')}
+            className="hero-cta-button"
           >
-            {/* Main image container */}
-            <div className="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-3xl p-2 sm:p-4 hover:border-cyan-400/50 hover:bg-slate-800/80 transition-all duration-300">
-              <img
-                src="/foto1.png"
-                className="w-full rounded-2xl transform group-hover:scale-105 transition-transform duration-500 shadow-2xl"
-                alt="ConsigIA Interface"
-                loading="eager"
-              />
-            </div>
+            <MessageCircle className="hero-cta-icon" />
+            <span>Começar Agora</span>
+            <ArrowRight className="hero-cta-arrow" />
+          </button>
+
+        </div>
+
+        {/* Right column - Image */}
+        <div className="hero-image-section">
+          <div className="hero-image-container">
+            <img
+              src="/foto1.png"
+              className="hero-image"
+              alt="ConsigIA Interface"
+              loading="eager"
+            />
           </div>
         </div>
+
       </div>
 
       <style>{`
-        @keyframes fade-in-up {
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        .hero-section {
+          min-height: 100vh;
+          background: #fafafa;
+          display: flex;
+          align-items: center;
+          padding: 2rem 40px;
+          position: relative;
+          overflow: hidden;
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .hero-bg-decoration {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, rgba(6, 182, 212, 0.03) 0%, transparent 50%, rgba(15, 23, 42, 0.02) 100%);
+          pointer-events: none;
+        }
+
+        .hero-bg-pattern {
+          display: none;
+        }
+
+        .hero-container {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 2rem;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 3rem;
+          align-items: center;
+          position: relative;
+          z-index: 10;
+        }
+
+        .hero-content {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          animation: heroFadeIn 1s ease-out forwards;
+        }
+
+        .hero-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(6, 182, 212, 0.2);
+          border-radius: 50px;
+          padding: 0.625rem 1.25rem;
+          width: fit-content;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .hero-badge-icon {
+          width: 1rem;
+          height: 1rem;
+          color: #06b6d4;
+        }
+
+        .hero-badge-text {
+          font-weight: 700;
+          font-size: 0.75rem;
+          color: #0f172a;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+
+        .hero-title {
+          font-size: clamp(3rem, 8vw, 4rem);
+          font-weight: 900;
+          color: #0f172a;
+          line-height: 1.1;
+          margin: 0;
+        }
+
+        .hero-title-highlight {
+          background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #0891b2 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+
+        .hero-subtitle-container {
+          height: 4rem;
+          display: flex;
+          align-items: center;
+          margin: 0.5rem 0;
+        }
+
+        .hero-subtitle {
+          font-size: clamp(1.25rem, 4vw, 1.5rem);
+          font-weight: 500;
+          color: #374151;
+          margin: 0;
+        }
+
+        .hero-cursor {
+          color: #06b6d4;
+          animation: heroPulse 1.5s infinite;
+        }
+
+        .hero-description {
+          font-size: clamp(1.125rem, 3vw, 1.25rem);
+          color: #4b5563;
+          line-height: 1.7;
+          max-width: 32rem;
+          margin: 0;
+        }
+
+        .hero-cta-button {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          background: #0f172a;
+          color: white;
+          padding: 1rem 2rem;
+          border-radius: 0.75rem;
+          font-size: 1.125rem;
+          font-weight: 600;
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+          width: fit-content;
+          font-family: inherit;
+        }
+
+        .hero-cta-button:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 6px 20px rgba(15, 23, 42, 0.2);
+          background: #1e293b;
+        }
+
+        .hero-cta-icon,
+        .hero-cta-arrow {
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+
+        .hero-cta-arrow {
+          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-cta-button:hover .hero-cta-arrow {
+          transform: translateX(0.5rem);
+        }
+
+        .hero-image-section {
+          display: flex;
+          justify-content: center;
+        }
+
+        .hero-image {
+          width: 100%;
+          height: auto;
+          border-radius: 0.75rem;
+        }
+
+        @keyframes heroFadeIn {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
@@ -171,28 +274,76 @@ const HeroSection = () => {
           }
         }
 
-        .animation-delay-200 {
-          animation-delay: 200ms;
+        @keyframes heroPulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
         }
 
-        .animation-delay-400 {
-          animation-delay: 400ms;
+        /* Desktop Large */
+        @media (min-width: 1024px) {
+          .hero-container {
+            padding: 0 3rem;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+          }
         }
 
-        .animation-delay-600 {
-          animation-delay: 600ms;
+        @media (min-width: 1280px) {
+          .hero-container {
+            padding: 0 4rem;
+          }
         }
 
-        .animation-delay-800 {
-          animation-delay: 800ms;
+        /* Tablet */
+        @media (max-width: 1023px) {
+          .hero-container {
+            padding: 0 2rem;
+          }
+          
+          .hero-image-section {
+            order: -1;
+          }
+          
+          .hero-content {
+            text-align: center;
+            align-items: center;
+          }
         }
 
-        .animation-delay-1000 {
-          animation-delay: 1000ms;
+        /* Mobile */
+        @media (max-width: 768px) {
+          .hero-container {
+            padding: 0 1.5rem;
+            gap: 2rem;
+          }
+
+          .hero-section {
+            padding: 1rem 0;
+          }
+
+          .hero-badge {
+            padding: 0.625rem 1.25rem;
+          }
+
+          .hero-badge-text {
+            font-size: 0.6875rem;
+          }
+
+          .hero-cta-button {
+            width: 100%;
+            justify-content: center;
+            max-width: 20rem;
+          }
         }
 
-        .animation-delay-1200 {
-          animation-delay: 1200ms;
+        @media (max-width: 480px) {
+          .hero-container {
+            padding: 0 1rem;
+          }
+
+          .hero-image-container {
+            padding: 0.75rem;
+          }
         }
       `}</style>
     </section>

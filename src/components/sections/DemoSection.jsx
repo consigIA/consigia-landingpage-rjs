@@ -65,21 +65,21 @@ const ChatMessage = ({ message, isNew }) => {
         }`}
     >
       {isBot && (
-        <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-slate-900 to-blue-950 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+        <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-cyan-500 via-cyan-400 to-cyan-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-1 shadow-lg backdrop-blur-md ring-1 ring-white/10">
           <Bot className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
         </div>
       )}
 
-      <div className={`max-w-[75%] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-xl sm:rounded-2xl shadow-sm ${isBot
-        ? 'bg-slate-100 text-blue-950'
-        : 'bg-gradient-to-r from-cyan-400 to-cyan-500 text-blue-950 ml-8 sm:ml-12'
+      <div className={`max-w-[75%] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl shadow-lg ${isBot
+        ? 'bg-white text-slate-800 border border-gray-200'
+        : 'bg-gradient-to-r from-slate-800 to-slate-700 text-white ml-8 sm:ml-12'
         }`}>
-        <p className="text-xs sm:text-sm leading-relaxed">{message.content}</p>
+        <p className="text-xs sm:text-sm leading-relaxed font-medium">{message.content}</p>
       </div>
 
       {!isBot && (
-        <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-cyan-400 to-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-          <User className="h-3 w-3 sm:h-4 sm:w-4 text-blue-950" />
+        <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-slate-700 to-slate-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-1 shadow-lg backdrop-blur-md ring-1 ring-white/10">
+          <User className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
         </div>
       )}
     </div>
@@ -116,7 +116,7 @@ const DemoSection = () => {
           setTimeout(() => {
             startChatAnimation()
           }, 2000)
-        }, 6000) // Aguarda mais tempo antes de reiniciar
+        }, 6000)
         return
       }
 
@@ -191,113 +191,413 @@ const DemoSection = () => {
     }
   }, [hasAnimated, startChatAnimation])
 
-  return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-slate-50 to-cyan-50 relative" ref={sectionRef}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-950 mb-4">
-            Exemplificação
-          </h2>
-          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto px-4">
-            Que tal uma inteligência artificial integrada ao Whatsapp que possa te ajudar a encontrar o melhor empréstimo consignado?
-          </p>
-        </div>
+return (
+    <>
+      <section className="demo-section" ref={sectionRef}>
+        <div className="demo-container">
+          <div className={`demo-header ${isVisible ? 'demo-header--visible' : ''}`}>
+            <h2 className="demo-title">
+              Experimente na Prática
+            </h2>
+            <p className="demo-subtitle">
+              Veja como nossa inteligência artificial integrada ao WhatsApp pode revolucionar seu atendimento
+            </p>
+          </div>
 
-        {/* Chat Demo */}
-        <div
-          className={`transform transition-all duration-1000 ease-out max-w-2xl mx-auto ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-        >
-          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            {/* Chat Header */}
-            <div className="bg-gradient-to-r from-slate-900 to-blue-950 px-4 sm:px-6 py-3 sm:py-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center">
-                    <SiWhatsapp className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                  </div>
-                  <div className="ml-2 sm:ml-3">
-                    <h3 className="font-semibold text-white text-sm sm:text-base">Assistente I.A</h3>
-                    <div className="flex items-center">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full mr-1.5 sm:mr-2"></div>
-                      <span className="text-xs sm:text-sm text-blue-100">Online</span>
+          {/* Chat Demo */}
+          <div className={`demo-chat ${isVisible ? 'demo-chat--visible' : ''}`}>
+            <div className="chat-container">
+              {/* Chat Header */}
+              <div className="chat-header">
+                <div className="chat-header-content">
+                  <div className="chat-header-info">
+                    <div className="chat-avatar">
+                      <SiWhatsapp className="chat-avatar-icon" />
+                    </div>
+                    <div className="chat-user-info">
+                      <h3 className="chat-user-name">Assistente I.A</h3>
+                      <div className="chat-status">
+                        <div className="status-indicator"></div>
+                        <span className="status-text">Online</span>
+                      </div>
                     </div>
                   </div>
+
+                  {/* Restart indicator */}
+                  {isRestarting && (
+                    <div className="restart-indicator">
+                      <RefreshCw className="restart-icon" />
+                      <span className="restart-text-full">Reiniciando...</span>
+                      <span className="restart-text-short">...</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Chat Messages */}
+              <div ref={chatContainerRef} className="chat-messages">
+                <div className="messages-container">
+                  {visibleMessages.map((message) => (
+                    <ChatMessage
+                      key={`${message.id}-${currentMessageIndex}`}
+                      message={message}
+                      isNew={message.isNew}
+                    />
+                  ))}
                 </div>
 
-                {/* Restart indicator */}
+                {/* Typing indicator */}
+                {isTyping && (
+                  <div className="typing-indicator">
+                    <div className="typing-avatar">
+                      <Bot className="typing-bot-icon" />
+                    </div>
+                    <div className="typing-bubble">
+                      <div className="typing-dots">
+                        <div className="typing-dot typing-dot-1"></div>
+                        <div className="typing-dot typing-dot-2"></div>
+                        <div className="typing-dot typing-dot-3"></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Demo restart message */}
                 {isRestarting && (
-                  <div className="flex items-center text-slate-200 text-xs sm:text-sm">
-                    <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4 mr-1 animate-spin" />
-                    <span className="hidden sm:inline">Reiniciando...</span>
-                    <span className="sm:hidden">...</span>
+                  <div className="restart-message">
+                    <div className="restart-badge">
+                      <RefreshCw className="restart-badge-icon" />
+                      <span className="restart-badge-text-full">Reiniciando demonstração...</span>
+                      <span className="restart-badge-text-short">Reiniciando...</span>
+                    </div>
                   </div>
                 )}
               </div>
-            </div>
 
-            {/* Chat Messages */}
-            <div
-              ref={chatContainerRef}
-              className="p-6 h-96 overflow-y-auto bg-slate-50 scroll-smooth scrollbar-hide"
-            >
-              <div className="space-y-4">
-                {visibleMessages.map((message) => (
-                  <ChatMessage
-                    key={`${message.id}-${currentMessageIndex}`}
-                    message={message}
-                    isNew={message.isNew}
-                  />
-                ))}
-              </div>
-
-              {/* Typing indicator */}
-              {isTyping && (
-                <div className="flex items-center mt-3 sm:mt-4 animate-pulse">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-slate-900 to-blue-950 rounded-full flex items-center justify-center">
-                    <Bot className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
-                  </div>
-                  <div className="ml-2 sm:ml-3 bg-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2 sm:py-3">
-                    <div className="flex space-x-1">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-slate-500 rounded-full animate-bounce"></div>
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-slate-500 rounded-full animate-bounce animation-delay-200"></div>
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-slate-500 rounded-full animate-bounce animation-delay-400"></div>
-                    </div>
+              {/* Chat Input */}
+              <div className="chat-input">
+                <div className="chat-input-container">
+                  <div className="input-field">
+                    <span className="input-placeholder">Digite sua mensagem...</span>
                   </div>
                 </div>
-              )}
-
-              {/* Demo restart message */}
-              {isRestarting && (
-                <div className="text-center py-6 sm:py-8">
-                  <div className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-cyan-100 text-blue-950 rounded-full text-xs sm:text-sm font-medium">
-                    <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2 animate-spin" />
-                    <span className="hidden sm:inline">Reiniciando demonstração...</span>
-                    <span className="sm:hidden">Reiniciando...</span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Chat Input */}
-            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-white border-t border-slate-200">
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="flex-1 bg-slate-100 rounded-full px-3 sm:px-4 py-1.5 sm:py-2">
-                  <span className="text-slate-500 text-xs sm:text-sm">Digite sua mensagem...</span>
-                </div>
-                <button className="bg-gradient-to-r from-slate-900 to-blue-950 hover:from-blue-950 hover:to-slate-900 text-white rounded-full p-1.5 sm:p-2 transition-all">
-                  <SiWhatsapp className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        .demo-section {
+          background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #3b82f6 100%);
+          padding: 80px 0;
+          position: relative;
+          overflow: hidden;
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .demo-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: 
+            radial-gradient(ellipse at top left, rgba(34, 211, 238, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse at bottom right, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2306b6d4' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+          pointer-events: none;
+        }
+
+        .demo-container {
+          max-width: 1000px;
+          margin: 0 auto;
+          padding: 0 24px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .demo-header {
+          text-align: center;
+          margin-bottom: 64px;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .demo-header--visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .demo-title {
+          font-size: clamp(2.5rem, 6vw, 3rem);
+          font-weight: 900;
+          color: #ffffff;
+          margin-bottom: 16px;
+          letter-spacing: -0.02em;
+          line-height: 1.1;
+        }
+
+        .demo-subtitle {
+          font-size: clamp(1rem, 3vw, 1.125rem);
+          color: #ffffff;
+          max-width: 600px;
+          margin: 0 auto;
+          line-height: 1.6;
+          font-weight: 500;
+        }
+
+        .demo-chat {
+          max-width: 600px;
+          margin: 0 auto;
+          opacity: 0;
+          transform: translateY(40px);
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .demo-chat--visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .chat-container {
+          background: white;
+          border-radius: 24px;
+          border: 1px solid rgba(6, 182, 212, 0.1);
+          overflow: hidden;
+          box-shadow: 
+            0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 10px 10px -5px rgba(0, 0, 0, 0.04),
+            0 0 0 1px rgba(6, 182, 212, 0.05);
+        }
+
+        .chat-header {
+          background: #f1f5f9;
+          border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+          padding: 18px 24px;
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-header-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .chat-header-info {
+          display: flex;
+          align-items: center;
+        }
+
+        .chat-avatar {
+          width: 42px;
+          height: 42px;
+          background: linear-gradient(to right, #1e293b, #334155);
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 14px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-avatar-icon {
+          width: 22px;
+          height: 22px;
+          color: #ffffff;
+        }
+
+        .chat-user-name {
+          font-weight: 700;
+          color: #1e293b;
+          font-size: 16px;
+          margin: 0 0 4px 0;
+          letter-spacing: -0.01em;
+        }
+
+        .chat-status {
+          display: flex;
+          align-items: center;
+        }
+
+        .status-indicator {
+          width: 8px;
+          height: 8px;
+          background: #10b981;
+          border-radius: 50%;
+          margin-right: 8px;
+          box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        }
+
+        .status-text {
+          font-size: 14px;
+          color: #1e293b;
+          font-weight: 500;
+        }
+
+        .restart-indicator {
+          display: flex;
+          align-items: center;
+          color: white;
+          font-size: 14px;
+          font-weight: 500;
+          background: rgba(255, 255, 255, 0.2);
+          padding: 8px 12px;
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          backdrop-filter: blur(8px);
+        }
+
+        .restart-icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 8px;
+          animation: spin 1s linear infinite;
+        }
+
+        .restart-text-short {
+          display: block;
+        }
+
+        .restart-text-full {
+          display: none;
+        }
+
+        .chat-messages {
+          padding: 28px 24px;
+          height: 420px;
+          overflow-y: auto;
+          background: #fafafa;
+        }
+
+        .messages-container {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+
+        .typing-indicator {
+          display: flex;
+          align-items: center;
+          margin-top: 18px;
+          animation: fadeIn 0.3s ease-in;
+        }
+
+        .typing-avatar {
+          width: 32px;
+          height: 32px;
+          background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+          backdrop-filter: blur(8px);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 12px;
+          box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .typing-bot-icon {
+          width: 16px;
+          height: 16px;
+          color: white;
+        }
+
+        .typing-bubble {
+          background: white;
+          border-radius: 18px;
+          padding: 12px 16px;
+          border: 1px solid rgba(6, 182, 212, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .typing-dots {
+          display: flex;
+          gap: 4px;
+        }
+
+        .typing-dot {
+          width: 8px;
+          height: 8px;
+          background: #06b6d4;
+          border-radius: 50%;
+          animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot-1 {
+          animation-delay: -0.32s;
+        }
+
+        .typing-dot-2 {
+          animation-delay: -0.16s;
+        }
+
+        .typing-dot-3 {
+          animation-delay: 0s;
+        }
+
+        .restart-message {
+          text-align: center;
+          padding: 32px 0;
+        }
+
+        .restart-badge {
+          display: inline-flex;
+          align-items: center;
+          padding: 10px 18px;
+          background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+          color: white;
+          border-radius: 24px;
+          font-size: 14px;
+          font-weight: 600;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        .restart-badge-icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 8px;
+          animation: spin 1s linear infinite;
+        }
+
+        .restart-badge-text-short {
+          display: block;
+        }
+
+        .restart-badge-text-full {
+          display: none;
+        }
+
+        .chat-input {
+          padding: 20px 24px;
+          background: #f1f5f9;
+          border-top: 1px solid rgba(6, 182, 212, 0.1);
+        }
+
+        .chat-input-container {
+          display: flex;
+          align-items: center;
+        }
+
+        .input-field {
+          flex: 1;
+          background: white;
+          border-radius: 24px;
+          padding: 12px 18px;
+          border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .input-placeholder {
+          color: #94a3b8;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
         @keyframes slide-in {
           from {
             opacity: 0;
@@ -309,10 +609,10 @@ const DemoSection = () => {
           }
         }
 
-        @keyframes fade-in-up {
+        @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px);
           }
           to {
             opacity: 1;
@@ -320,36 +620,152 @@ const DemoSection = () => {
           }
         }
 
+        @keyframes bounce {
+          0%, 80%, 100% {
+            transform: scale(0);
+          }
+          40% {
+            transform: scale(1);
+          }
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
         .animate-slide-in {
           animation: slide-in 0.5s ease-out forwards;
         }
 
-        .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out forwards;
+        /* Scrollbar customization */
+        .chat-messages {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(6, 182, 212, 0.3) transparent;
         }
 
-        .animation-delay-200 {
-          animation-delay: 200ms;
+        .chat-messages::-webkit-scrollbar {
+          width: 4px;
         }
 
-        .animation-delay-400 {
-          animation-delay: 400ms;
+        .chat-messages::-webkit-scrollbar-track {
+          background: transparent;
         }
 
-        .scroll-smooth {
-          scroll-behavior: smooth;
+        .chat-messages::-webkit-scrollbar-thumb {
+          background: rgba(6, 182, 212, 0.3);
+          border-radius: 4px;
         }
 
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+          background: rgba(6, 182, 212, 0.5);
         }
 
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
+        /* Responsive Design */
+        @media (min-width: 640px) {
+          .restart-text-short {
+            display: none;
+          }
+
+          .restart-text-full {
+            display: block;
+          }
+
+          .restart-badge-text-short {
+            display: none;
+          }
+
+          .restart-badge-text-full {
+            display: block;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .demo-section {
+            padding: 60px 0;
+          }
+
+          .demo-container {
+            padding: 0 16px;
+          }
+
+          .demo-header {
+            margin-bottom: 48px;
+          }
+
+          .chat-header {
+            padding: 14px 18px;
+          }
+
+          .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+          }
+
+          .chat-avatar-icon {
+            width: 18px;
+            height: 18px;
+          }
+
+          .chat-user-name {
+            font-size: 15px;
+          }
+
+          .status-text {
+            font-size: 13px;
+          }
+
+          .chat-messages {
+            padding: 20px 18px;
+            height: 380px;
+          }
+
+          .messages-container {
+            gap: 14px;
+          }
+
+          .typing-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 10px;
+          }
+
+          .typing-bot-icon {
+            width: 14px;
+            height: 14px;
+          }
+
+          .typing-bubble {
+            padding: 10px 14px;
+            border-radius: 16px;
+          }
+
+          .typing-dots {
+            gap: 3px;
+          }
+
+          .typing-dot {
+            width: 6px;
+            height: 6px;
+          }
+
+          .chat-input {
+            padding: 16px 18px;
+          }
+
+          .input-field {
+            padding: 10px 16px;
+            border-radius: 20px;
+          }
+
+          .input-placeholder {
+            font-size: 13px;
+          }
         }
       `}</style>
-    </section>
+    </>
   )
 }
 

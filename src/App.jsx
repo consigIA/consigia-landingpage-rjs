@@ -6,21 +6,20 @@ import Comparation from './components/sections/Comparation'
 import BenefitsSection from './components/sections/BenefitsSection'
 import FAQSection from './components/sections/FAQSection'
 import PartnerSection from './components/sections/PartnerSection'
-import StatsSection from './components/sections/StatsSection'
 import CTASection from './components/sections/CTASection'
 import NewsSection from './components/sections/NewsSection'
 import Footer from './components/common/Footer'
 import FormularySection from './components/sections/FormularySection'
-import ConsigAIButton from './components/common/ConsigIA'
+import WhatsAppButton from './components/common/WhatsAppButton'
+import TopButton from './components/common/TopButton'
 import FeedbackSection from './components/sections/FeedbackSection'
 import React from 'react';
-import './styles/animations.css'
 import NotFound from './components/pages/NotFound';
 
 function App() {
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div>
       <Routes>
         <Route
           path="/"
@@ -29,17 +28,16 @@ function App() {
               <Header />
               <main>
                 <HeroSection />
-                <DemoSection />
+                <DemoSection />           
                 <PartnerSection />
-                <FeedbackSection />
                 <Comparation />
-                <BenefitsSection />
                 <FAQSection />
-                <StatsSection />
+                <BenefitsSection />
                 <CTASection />
               </main>
               <Footer />
-              <ConsigAIButton />
+              <TopButton/>
+              <WhatsAppButton />
             </>
           }
         />
@@ -50,7 +48,8 @@ function App() {
               <Header />
               <FormularySection />
               <Footer />
-              <ConsigAIButton />
+              <TopButton/>
+              <WhatsAppButton />
             </>
           }
         />
@@ -62,7 +61,8 @@ function App() {
               <Header />
               <NewsSection />
               <Footer />
-              <ConsigAIButton />
+              <TopButton/>
+              <WhatsAppButton />
             </>
           }
         />

@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ExternalLink, RefreshCw, AlertCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ExternalLink, RefreshCw, AlertCircle } from 'lucide-react';
 
 // Mantido igual - início
 class NewsService {
@@ -100,44 +100,44 @@ const newsService = new NewsService();
 
 const NewsCard = ({ news }) => {
   const categoryColors = {
-    'Mercado': 'bg-blue-500/20 text-blue-400',
-    'Inovação': 'bg-green-500/20 text-green-400',
-    'Pesquisa': 'bg-purple-500/20 text-purple-400',
-    'Investimentos': 'bg-yellow-500/20 text-yellow-400',
-    'Tecnologia': 'bg-cyan-500/20 text-cyan-400'
+    'Mercado': 'category-mercado',
+    'Inovação': 'category-inovacao',
+    'Pesquisa': 'category-pesquisa',
+    'Investimentos': 'category-investimentos',
+    'Tecnologia': 'category-tecnologia'
   };
 
   return (
-    <div className="flex-shrink-0 w-80 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 hover:border-cyan-400/50 hover:bg-slate-800/80 transition-all duration-300 hover:transform hover:scale-95">
-      <div className="h-full flex flex-col">
-        <div className="flex justify-between items-start mb-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${categoryColors[news.category] || categoryColors['Tecnologia']}`}>
+    <div className="news-card">
+      <div className="news-card-content">
+        <div className="news-card-header">
+          <span className={`category-tag ${categoryColors[news.category] || categoryColors['Tecnologia']}`}>
             {news.category}
           </span>
           {news.isNew && (
-            <span className="bg-gradient-to-r from-green-500 to-green-600 text-white text-xs px-2 py-1 rounded-full">
+            <span className="recent-badge">
               Recente
             </span>
           )}
         </div>
         
-        <h3 className="text-lg font-bold text-white mb-3 line-clamp-2">
+        <h3 className="news-title">
           {news.title}
         </h3>
         
-        <p className="text-gray-300 text-sm mb-4 flex-grow line-clamp-3">
+        <p className="news-summary">
           {news.summary}
         </p>
         
-        <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>{news.date}</span>
+        <div className="news-footer">
+          <span className="news-date">{news.date}</span>
           <a 
             href={news.url} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors"
+            className="news-source-link"
           >
-            {news.source} <ExternalLink className="ml-1 h-4 w-4" />
+            {news.source} <ExternalLink className="external-icon" />
           </a>
         </div>
       </div>
@@ -149,8 +149,6 @@ const NewsSection = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const carouselRef = useRef(null);
 
   const fetchNews = async () => {
     setLoading(true);
@@ -176,24 +174,35 @@ const NewsSection = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const nextSlide = () => {
-    setCurrentIndex(prev => (prev >= news.length - 3 ? 0 : prev + 1));
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex(prev => (prev <= 0 ? news.length - 1 : prev - 1));
-  };
-
-  if (loading) {
+   if (loading) {
     return (
-      <section className="pb-90 pt-79 py-20 relative overflow-hidden bg-slate-900">
-        <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex space-x-2">
-            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce"></div>
-            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+      <section className="news-section">
+        <div className="news-container">
+          <div className="news-header">
+            <h2 className="news-title-main">
+              Acompanhe as novidades
+            </h2>
           </div>
-          <p className="mt-4 text-gray-400">Carregando últimas notícias...</p>
+
+          <div className="loading-container">
+            <div className="loading-dots">
+              <div className="loading-dot loading-dot-1"></div>
+              <div className="loading-dot loading-dot-2"></div>
+              <div className="loading-dot loading-dot-3"></div>
+            </div>
+            <p className="loading-text">Carregando últimas notícias...</p>
+          </div>
+
+          <div className="refresh-container">
+            <button
+              onClick={fetchNews}
+              className="refresh-button"
+              disabled
+            >
+              <RefreshCw className="refresh-icon loading-spin" />
+              Carregando...
+            </button>
+          </div>
         </div>
       </section>
     );
@@ -202,18 +211,32 @@ const NewsSection = () => {
   if (error) {
     const isNotFound = error.includes("Nenhuma notícia encontrada");
     return (
-      <section className="pt-50 py-55 relative overflow-hidden bg-slate-900">
-        <div className="container mx-auto px-4 max-w-md text-center">
-          <div className={`${isNotFound ? 'bg-yellow-500/10 border-yellow-500/30' : 'bg-red-500/10 border-red-500/30'} border rounded-2xl p-6 backdrop-blur-sm`}>
-            <AlertCircle className={`h-10 w-10 mx-auto mb-3 ${isNotFound ? 'text-yellow-400' : 'text-red-400'}`} />
-            <h3 className={`text-lg font-medium mb-2 ${isNotFound ? 'text-yellow-300' : 'text-red-300'}`}>
-              {isNotFound ? 'Nenhuma notícia encontrada' : 'Erro ao carregar notícias'}
-            </h3>
-            <p className={`mb-4 ${isNotFound ? 'text-yellow-400/80' : 'text-red-400/80'}`}>{error}</p>
+      <section className="news-section">
+        <div className="news-container">
+          <div className="news-header">
+            <h2 className="news-title-main">
+              Acompanhe as novidades
+            </h2>
+          </div>
+
+          <div className="error-container-main">
+            <div className={`error-container ${isNotFound ? 'error-container--warning' : 'error-container--error'}`}>
+              <AlertCircle className={`error-icon ${isNotFound ? 'error-icon--warning' : 'error-icon--error'}`} />
+              <h3 className={`error-title ${isNotFound ? 'error-title--warning' : 'error-title--error'}`}>
+                {isNotFound ? 'Nenhuma notícia encontrada' : 'Erro ao carregar notícias'}
+              </h3>
+              <p className={`error-message ${isNotFound ? 'error-message--warning' : 'error-message--error'}`}>
+                {error}
+              </p>
+            </div>
+          </div>
+
+          <div className="refresh-container">
             <button
               onClick={fetchNews}
-              className={`${isNotFound ? 'bg-yellow-500/90 hover:bg-yellow-500' : 'bg-red-500/90 hover:bg-red-500'} text-white px-4 py-2 rounded-lg transition-colors`}
+              className={`refresh-button ${isNotFound ? 'refresh-button--warning' : 'refresh-button--error'}`}
             >
+              <RefreshCw className="refresh-icon" />
               Tentar novamente
             </button>
           </div>
@@ -223,67 +246,487 @@ const NewsSection = () => {
   }
 
   return (
-    <section className="pt-30 py-20 relative overflow-hidden bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-block mb-4">
-            <span className="text-cyan-400/80 text-lg font-semibold tracking-wider uppercase">
-              Notícias
-            </span>
+    <>
+      <section className="news-section">
+        <div className="news-container">
+          <div className="news-header">
+            <h2 className="news-title-main">
+              Acompanhe as novidades
+            </h2>
           </div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
-            Acompanhe as{' '}
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              novidades
-            </span>
-          </h2>
-          
-          <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full"></div>
-        </div>
 
-        <div className="relative px-14">
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 p-3 rounded-full shadow-md hover:bg-slate-800 hover:border-cyan-400/50 transition-colors"
-            aria-label="Notícia anterior"
-          >
-            <ChevronLeft className="h-5 w-5 text-cyan-400" />
-          </button>
-
-          <div className="overflow-hidden relative">
-            <div className="mx-auto"> {/* Ajuste a largura conforme necessário */}
-              <div
-                ref={carouselRef}
-                className="flex transition-transform duration-300 gap-8 px-8" /* Adicionei px-4 para padding */
-                style={{ transform: `translateX(-${currentIndex * (320 + 32)}px)` }}
-              >
-                {news.map((item) => (
-                  <NewsCard key={item.id} news={item} />
-                ))}
-              </div>
-            </div>
+          <div className="news-grid">
+            {news.map((item) => (
+              <NewsCard key={item.id} news={item} />
+            ))}
           </div>
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 p-3 rounded-full shadow-md hover:bg-slate-800 hover:border-cyan-400/50 transition-colors"
-            aria-label="Próxima notícia"
-          >
-            <ChevronRight className="h-5 w-5 text-cyan-400" />
-          </button>
-        </div>
 
-        <div className="flex justify-center mt-12">
-          <button
-            onClick={fetchNews}
-            className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors"
-          >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Atualizar notícias
-          </button>
+          <div className="refresh-container">
+            <button
+              onClick={fetchNews}
+              className="refresh-button"
+            >
+              <RefreshCw className="refresh-icon" />
+              Atualizar notícias
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        .news-section {
+          background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #3b82f6 100%);
+          padding: 60px 0px;
+          position: relative;
+          overflow: hidden;
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .loading-container, 
+        .error-container-main {
+          min-height: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 64px;
+        }
+
+        .news-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: 
+            radial-gradient(ellipse at top left, rgba(34, 211, 238, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse at bottom right, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2306b6d4' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+          pointer-events: none;
+        }
+
+        .news-container {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 80px 60px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .news-section-space {
+          max-width: 1280px;
+          padding: 1280px 60px;
+          z-index: 1;
+          background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #3b82f6 100%);
+          padding: 60px 0px;
+          position: relative;
+          overflow: hidden;
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .news-header {
+          text-align: center;
+          margin-bottom: 64px;
+        }
+
+        .news-title-main {
+          font-size: clamp(2.5rem, 6vw, 3.5rem);
+          font-weight: 900;
+          color: #ffffff;
+          margin-bottom: 24px;
+          letter-spacing: -0.02em;
+          line-height: 1.1;
+        }
+
+        .news-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 32px;
+          margin-bottom: 64px;
+        }
+
+        .news-card {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(6, 182, 212, 0.1);
+          border-radius: 20px;
+          padding: 24px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          height: 100%;
+        }
+
+        .news-card:hover {
+          border-color: rgba(6, 182, 212, 0.3);
+          transform: translateY(-4px);
+          box-shadow: 0 12px 24px rgba(6, 182, 212, 0.15);
+        }
+
+        .news-card-content {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .news-card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 16px;
+        }
+
+        .category-tag {
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 12px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .category-mercado {
+          background: rgba(59, 130, 246, 0.15);
+          color: #3b82f6;
+        }
+
+        .category-inovacao {
+          background: rgba(16, 185, 129, 0.15);
+          color: #10b981;
+        }
+
+        .category-pesquisa {
+          background: rgba(139, 92, 246, 0.15);
+          color: #8b5cf6;
+        }
+
+        .category-investimentos {
+          background: rgba(245, 158, 11, 0.15);
+          color: #f59e0b;
+        }
+
+        .category-tecnologia {
+          background: rgba(6, 182, 212, 0.15);
+          color: #06b6d4;
+        }
+
+        .recent-badge {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          color: white;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 4px 8px;
+          border-radius: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .news-title {
+          font-size: 18px;
+          font-weight: 800;
+          color: #1e293b;
+          margin-bottom: 12px;
+          line-height: 1.3;
+        }
+
+        .news-summary {
+          color: #475569;
+          font-size: 14px;
+          font-weight: 500;
+          margin-bottom: 16px;
+          flex-grow: 1;
+          line-height: 1.5;
+        }
+
+        .news-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 12px;
+          color: #64748b;
+          margin-top: auto;
+        }
+
+        .news-date {
+          font-weight: 600;
+        }
+
+        .news-source-link {
+          display: flex;
+          align-items: center;
+          color: #06b6d4;
+          text-decoration: none;
+          font-weight: 600;
+          transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .news-source-link:hover {
+          color: #0891b2;
+        }
+
+        .external-icon {
+          width: 14px;
+          height: 14px;
+          margin-left: 4px;
+        }
+
+        /* Loading States - mesma altura que news-grid */
+        .loading-container {
+          text-align: center;
+          margin-bottom: 1280px;
+          min-height: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .loading-dots {
+          display: inline-flex;
+          gap: 8px;
+          margin-bottom: 16px;
+        }
+
+        .loading-dot {
+          width: 12px;
+          height: 12px;
+          background: #22d3ee;
+          border-radius: 50%;
+          animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .loading-dot-1 {
+          animation-delay: -0.32s;
+        }
+
+        .loading-dot-2 {
+          animation-delay: -0.16s;
+        }
+
+        .loading-dot-3 {
+          animation-delay: 0s;
+        }
+
+        .loading-text {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .loading-spin {
+          animation: spin 1s linear infinite;
+        }
+
+        /* Error States - mesma altura que news-grid */
+        .error-container-main {
+          margin-bottom: 64px;
+          min-height: 400px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .error-container {
+          max-width: 500px;
+          text-align: center;
+          padding: 48px;
+          border-radius: 24px;
+          border: 1px solid;
+          backdrop-filter: blur(12px);
+        }
+
+        .error-container--warning {
+          background: rgba(251, 191, 36, 0.1);
+          border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        .error-container--error {
+          background: rgba(239, 68, 68, 0.1);
+          border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .error-icon {
+          width: 48px;
+          height: 48px;
+          margin: 0 auto 16px;
+        }
+
+        .error-icon--warning {
+          color: #fbbf24;
+        }
+
+        .error-icon--error {
+          color: #ef4444;
+        }
+
+        .error-title {
+          font-size: 20px;
+          font-weight: 700;
+          margin-bottom: 12px;
+        }
+
+        .error-title--warning {
+          color: #fcd34d;
+        }
+
+        .error-title--error {
+          color: #fca5a5;
+        }
+
+        .error-message {
+          font-size: 16px;
+          margin-bottom: 0;
+          line-height: 1.5;
+        }
+
+        .error-message--warning {
+          color: rgba(251, 191, 36, 0.9);
+        }
+
+        .error-message--error {
+          color: rgba(239, 68, 68, 0.9);
+        }
+
+        .refresh-container {
+          display: flex;
+          justify-content: center;
+        }
+
+        .refresh-button {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: rgba(255, 255, 255, 0.2);
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 12px 20px;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          backdrop-filter: blur(12px);
+        }
+
+        .refresh-button:hover:not(:disabled) {
+          background: rgba(255, 255, 255, 0.3);
+          border-color: rgba(255, 255, 255, 0.5);
+          transform: translateY(-1px);
+        }
+
+        .refresh-button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .refresh-button--warning {
+          background: rgba(251, 191, 36, 0.2);
+          border-color: rgba(251, 191, 36, 0.4);
+        }
+
+        .refresh-button--warning:hover {
+          background: rgba(251, 191, 36, 0.3);
+          border-color: rgba(251, 191, 36, 0.6);
+        }
+
+        .refresh-button--error {
+          background: rgba(239, 68, 68, 0.2);
+          border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .refresh-button--error:hover {
+          background: rgba(239, 68, 68, 0.3);
+          border-color: rgba(239, 68, 68, 0.6);
+        }
+
+        .refresh-icon {
+          width: 16px;
+          height: 16px;
+        }
+
+        @keyframes bounce {
+          0%, 80%, 100% {
+            transform: scale(0);
+          }
+          40% {
+            transform: scale(1);
+          }
+        }
+
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .news-section {
+            padding: 60px 0;
+          }
+          
+            .loading-container, 
+            .error-container-main {
+              min-height: 300px;
+              margin-bottom: 48px;
+            }
+
+          .news-container {
+            padding: 0 16px;
+          }
+
+          .news-header {
+            margin-bottom: 48px;
+          }
+
+          .news-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 48px;
+          }
+
+          .loading-container {
+            margin-bottom: 48px;
+            min-height: 300px;
+          }
+
+          .error-container-main {
+            margin-bottom: 48px;
+            min-height: 300px;
+          }
+
+          .news-card {
+            padding: 20px;
+          }
+
+          .news-title {
+            font-size: 16px;
+          }
+
+          .news-summary {
+            font-size: 13px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .news-grid {
+            gap: 20px;
+          }
+
+          .news-card {
+            padding: 18px;
+          }
+
+          .error-container {
+            padding: 32px 24px;
+          }
+        }
+      `}</style>
+    </>
   );
 };
 
